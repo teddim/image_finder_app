@@ -9,20 +9,162 @@
     <script type="text/javascript" src="/javascripts/jquery.fileupload.js"></script>
     <script type="text/javascript" src="/javascripts/jquery.cloudinary.js"></script>
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href= "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Yeseva+One' rel='stylesheet' type='text/css'>
   </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
 
+  <body>
+
+    <!-- navigation panel -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="test">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#startfinding">Start Finding</a></li>
+            <li><a href="#howitworks">How it Works</a></li>
+            <li><a href="#information">About the Developer</a></li>
+
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <!-- first section - Home -->
+    <div id="home" class="home">
+      <div class="text-vcenter">
+        <h1> <%= title %> </h1>
+        <a href="#startfinding" class="btn btn-default btn-lg">Continue</a>
+      </div>
+    </div>
+    <!-- /first section -->
+
+    <!-- second section - About -->
+    <div id="startfinding" class="pad-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <p id="findme">
+              find Me
+            </p>
+            <a class="btn btn-primary col-md-5" href="../photo_upload">Start Finding</a>
+          </div>
+          <div class="col-sm-6 text-center">
+            <h2>So many images, so little time.</h2>
+            <p class="lead">Let me do the heavy lifting. Upload a collection of images, show me who you are looking for and I'll give you a set of images with that person in them.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /second section -->
+
+    <!-- third section - How it Works -->
+    <div id="howitworks" class="pad-section">
+      <div class="container">
+        <h2 class="text-center">How it Works</h2> <hr />
+        <div class="row text-center">
+          <div class="col-sm-3 col-xs-6">
+            <i class="glyphicon glyphicon-camera"> </i>
+            <h4>Step 1</h4>
+            <p>Click the <a href="../photo_upload" id="incognito_link">Start Finding</a> button above. Then upload a collection of images by simply dragging the images to the image window.</p>
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <i class="glyphicon glyphicon-record"> </i>
+            <h4>Step 2</h4>
+            <p>Select a target image. It should be a photograph of just the person you want to find. Front facing photos are best.</p>
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <i class="glyphicon glyphicon-search"> </i>
+            <h4>Step 3</h4>
+            <p>I will search the collection of images that you uploaded and compare each face in each image to the target image.</p>
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <i class="glyphicon glyphicon-ok"> </i>
+            <h4>Step 4</h4>
+            <p>Take a look at the results and enjoy the time savings.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /third section -->
+
+    <!-- fourth section - Information -->
+    <div id="information" class="pad-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h2 class="panel-title">About Teddi</h2>
+              </div>
+              <div class="panel-body lead">
+
+              <p>
+                I am a full stack web developer and I build apps for the web using Ruby on Rails and Node with Express.
+
+              </p>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h2 class="panel-title">More projects by Teddi</h2>
+              </div>
+              <div class="panel-body lead">
+                To see more information about other projects I have worked on, check out my portfolio. Some projects I've created are:
+                <li>Clean Kids Chore Chart Generator</li>
+                <li>gCamp, a Project Management App</li>
+                <li>a Round Robin Tournament Creation App</li>
+                <li>a U.S. Farmer's Market API</li>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /fourth section -->
+
+    <!-- fifth section -->
+    <div id="howitworks" class="pad-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 text-center">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <footer>
+      <hr />
+      <div class="container">
+        <p class="text-right">Project Developed by <a href="http://teddicodes.wordpress.com/">Teddi Maull</a></p>
+        <p class="text-right">
+          Image Credits:
+          computer image is from <a href="https://unsplash.com/galymzhanabdugalimov">Galymzhan Abdugalimov</a>,
+          library image is from <a href="http://www.unsplash.com/p">Patrik Göthe</a>
+        </p>
+      </div>
+    </footer>
+    <!-- /footer -->
 
 
   </body>
