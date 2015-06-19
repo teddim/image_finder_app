@@ -1,23 +1,44 @@
 
-$(function () {
+  var params = {
+     // Specify your subscription key
+     'subscription-key': '****'
+    //  'subscription-key': process.env.OXFORD_API_SECOND_KEY
+     // Specify values for optional parameters, as needed
+     // analyzesFaceLandmarks: "false",
+     // analyzesAge: "false",
+     // analyzesGender: "false",
+     // analyzesHeadPose: "false",
+  };
 
-    $.ajax({
-        url: 'https://api.projectoxford.ai/face/v0/detections?subscription-key=****',
-        type: 'POST',
-        dataType: "json",
-        contentType: "application/json",
-        crossDomain: true,
-        data: "{'url': 'http://res.cloudinary.com/isityou/image/upload/v1433997694/preset_folder/u58nswjjr78gfndfungf.jpg'}",
-        success: function (data) {
-            var html = '';
-            $.each(data, function (commentIndex, comment) {
-                html += 'faceid:' + comment['faceId']+"\r\n";
-            });
-            console.log('html' + html);
 
-        }
-    })
-    .fail(function (x) {
-        console.log("error:"+x.statusText+x.responseText);
-    });
-});
+
+  // need to get the url from cloudinary
+  var samplePhoto1 = new Photo('http://res.cloudinary.com/isityou/image/upload/c_scale,w_597/v1433993584/jqtep3a6uqc80bhterye.jpg');
+  var comparisonPhotos = new CollectionOfPhotos();
+  comparisonPhotos.addPhoto(samplePhoto1);
+
+// look into a promise
+
+  var dataURL = {'url':'http://res.cloudinary.com/isityou/image/upload/c_scale,w_597/v1433993584/jqtep3a6uqc80bhterye.jpg'};
+
+  $.ajax({
+    url: 'https://api.projectoxford.ai/face/v0/detections',
+    type: 'POST',
+    dataType: "json",
+    contentType: "application/json",
+    crossDomain: true,
+    // data: "{'faceId1': '','faceId2': '' }",
+    data: JSON.stringify(dataURL),
+    success: function (data) {
+      var html = '';
+      $.each(data, function (index, photoObj) {
+          // CollectionOfPhotos.photos.indexOf(this.data)
+        console.log(photoObj);
+      });
+      console.log( html );
+
+    }
+  })
+  .fail(function (x) {
+      console.log("error:"+x.statusText+x.responseText);
+  });
