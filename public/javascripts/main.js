@@ -1,4 +1,4 @@
-
+$(document).ready(function() {
   var params = {
      // Specify your subscription key
      'subscription-key': '****'
@@ -12,7 +12,7 @@
 
 
 
-  // need to get the url from cloudinary
+  // need to get the urls from cloudinary
   var samplePhoto1 = new Photo('http://res.cloudinary.com/isityou/image/upload/c_scale,w_597/v1433993584/jqtep3a6uqc80bhterye.jpg');
   var comparisonPhotos = new CollectionOfPhotos();
   comparisonPhotos.addPhoto(samplePhoto1);
@@ -22,7 +22,7 @@
   var dataURL = {'url':'http://res.cloudinary.com/isityou/image/upload/c_scale,w_597/v1433993584/jqtep3a6uqc80bhterye.jpg'};
 
   $.ajax({
-    url: 'https://api.projectoxford.ai/face/v0/detections',
+    url: 'https://api.projectoxford.ai/face/v0/detections?' + $.param(params),
     type: 'POST',
     dataType: "json",
     contentType: "application/json",
@@ -42,3 +42,4 @@
   .fail(function (x) {
       console.log("error:"+x.statusText+x.responseText);
   });
+});
