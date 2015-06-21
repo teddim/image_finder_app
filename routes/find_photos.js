@@ -53,29 +53,28 @@ function findPhotos(urls) {
     }
   };
 
-  var faceDetection = function(dataUrls) {
+  var faceDetection = function(dataUrl) {
+    var dataUrl = {'url': dataUrl};
+    console.log("dataUrl:" + dataUrl);
     //if dataUrls.length is 0 then return the getFaceIdData and call findSimilars?
     var options={
                 'APIkey':process.env.OXFORD_API_SECOND_KEY
               };
-    var temp = [];
-    var func = function(data){
-      temp.push(data);
-      console.log(temp);
-    }
+
     request({
              url: 'https://api.projectoxford.ai/face/v0/detections',
              headers: {'Access-Control-Allow-Origin': '*', 'Ocp-Apim-Subscription-Key': process.env.OXFORD_API_SECOND_KEY},
              method:"POST",
-             body: JSON.stringify(dataUrls[0])
+             body: JSON.stringify(dataUrl)
            },function(error,response,body){
                 console.log("body:" + body);
                  //get the faceId of the photo and push it onto the id list
 
                 var parsedBody = JSON.parse(body);
+                console.log(parsedBody);
                 //I no longer have named photos...so I need to figure out another way of doing this
-                photo1.faceIds.push(parsedBody[0]["faceId"]);
-                photo1.faceCoordinates.push(parsedBody[0]["faceRectangle"]);
+                // photo1.faceIds.push(parsedBody[0]["faceId"]);
+                // photo1.faceCoordinates.push(parsedBody[0]["faceRectangle"]);
                // call FaceDetection with an array that has the first element cut off?
              });
   }
