@@ -1,29 +1,29 @@
 $(document).ready(function() {
+      // upload images to cloudinary
 
-    // upload images to cloudinary
-
-    $('#upload_widget_opener').cloudinary_upload_widget(
+    $('#target_photo').cloudinary_upload_widget(
       { cloud_name: 'isityou', upload_preset: 'get_faces',
-      'folder': 'get_faces', theme: 'minimal', thumbnail_transformation: { width: 200, height: 200, crop: 'limit' } },
+      'folder': 'get_faces', theme: 'minimal', thumbnail_transformation: { width: 200, height: 200, crop: 'limit' }, button_caption: 'Upload a Target Image', multiple: false },
       function(error, result) {
-        $.ajax({
-          url: '/photo_upload',
-          type: 'POST',
-          dataType: "json",
-          contentType: "application/json",
-          data: JSON.stringify(result),
-          success: function (photoUrls) {
-            $.each(data, function (index, photoUrl) {
-              console.log("photoUrl: " +photoUrl);
-              var r = ("img src = '" + photoUrl + "'")
-              $("#find_photos").append(r);
+        console.log("target: ", result[0].url);
+        localStorage.setItem("target",result[0].url);
+      }
+    );
+
+    $('#upload_widget_opener_collection').cloudinary_upload_widget(
+      { cloud_name: 'isityou', upload_preset: 'get_faces',
+      'folder': 'get_faces', theme: 'minimal', thumbnail_transformation: { width: 200, height: 200, crop: 'limit' },button_caption: 'Upload a Collection of Images', max_files: 20 },
+      function(error, result) {
+        $.post( "/photo_upload", JSON.stringify(result))
+          .done(function( photoUrls ) {
+            $.each( photoUrls["photos"], function( key, url ) {
+              var imgSrc = ("<img src = '" + url + "'/>");
+              $("#matched_photos").append(imgSrc);
             });
+          });
+    })
+    // .fail(function (x) {
+    //     console.log("error:"+x.statusText+x.responseText);
+    // });
 
-          }
-        })
-        .fail(function (x) {
-            console.log("error:"+x.statusText+x.responseText);
-        });
-
-    });
 });
