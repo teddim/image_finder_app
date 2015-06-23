@@ -1,6 +1,6 @@
-function findPhotos(urls) {
+function findPhotos(res,urls) {
   var request = require('request');
-  var Q = require('q');
+  var async   = require('async');
 
   var Photo = function(url) {
     this.faceIds = [];
@@ -9,13 +9,13 @@ function findPhotos(urls) {
   };
 
   var CollectionOfPhotos = function() {
-    this.targetPhotoId = '94fde889-b591-4216-b556-41eb3f7def22';
+    this.targetPhotoId = '6d567ebf-9e2f-4195-b2a4-319441039a18';
     // example: {url: [id1,id2,id3], url2: [id4], url3: [id5,id6,id7]}
-    this.allUrlsAndFaceIds = {"http://res.cloudinary.com/isityou/image/upload/v1434854280/get_faces/heather.jpg": ['9212a496-a4a2-4697-ba35-e866bb43bef5']
-    ,"http://res.cloudinary.com/isityou/image/upload/v1434891981/sue_v3l6yq.jpg": ['260d9d11-504a-4eff-8b0f-c51d5f10debc']
-    ,"http://res.cloudinary.com/isityou/image/upload/v1433997424/preset_folder/yv7u6cn6x8p9ahhqngti.jpg" : ['985425cc-1ad4-43ee-b80d-2d6ee5797e25']
-    ,"http://res.cloudinary.com/isityou/image/upload/v1434854174/get_faces/maria.jpg" : ['3a8d2c6a-deeb-4ddf-a17a-6c2716b911d8']
-    ,"http://res.cloudinary.com/isityou/image/upload/v1434892101/maria2_i05l5c.jpg" : ['94fde889-b591-4216-b556-41eb3f7def22']
+    this.allUrlsAndFaceIds = {"http://res.cloudinary.com/isityou/image/upload/v1434854280/get_faces/heather.jpg": ['559583ad-41b1-4eee-93b5-c878a82d98a8']
+    ,"http://res.cloudinary.com/isityou/image/upload/v1434891981/sue_v3l6yq.jpg": ['f0b127b5-b250-4813-bcc7-1b7710d73b11']
+    ,"http://res.cloudinary.com/isityou/image/upload/v1433997424/preset_folder/yv7u6cn6x8p9ahhqngti.jpg" : ['9c0f6965-cfbe-4348-9e90-bdbec367e314']
+    ,"http://res.cloudinary.com/isityou/image/upload/v1434854174/get_faces/maria.jpg" : ['114746fc-9655-4deb-9ca0-6b9543945582']
+    ,"http://res.cloudinary.com/isityou/image/upload/v1434892101/maria2_i05l5c.jpg" : ['6d567ebf-9e2f-4195-b2a4-319441039a18']
     };
     this.faceIdData = {};
     this.matchedUrls = [];
@@ -66,7 +66,7 @@ function findPhotos(urls) {
     }
   };
 
-  var faceDetection = function(dataUrl) {
+  var faceDetection = function(dataUrl, async_callback) {
     var dataUrl = {'url': dataUrl};
     console.log("dataUrl:" , dataUrl);
     var options={
@@ -86,6 +86,7 @@ function findPhotos(urls) {
                 console.log("faceDetection: ");
 
                 console.log(parsedBody);
+                async_callback(null, parsedBody);
                 //I no longer have named photos...so I need to figure out another way of doing this
                 // photo1.faceIds.push(parsedBody[0]["faceId"]);
                 // photo1.faceCoordinates.push(parsedBody[0]["faceRectangle"]);
@@ -93,7 +94,7 @@ function findPhotos(urls) {
              });
   }
 
-  var findSimilars = function (faceIdData) {
+  var findSimilars = function (faceIdData, async_callback) {
     // console.log(faceIdData);
     var options={
                 'APIkey':process.env.OXFORD_API_SECOND_KEY
@@ -114,6 +115,8 @@ function findPhotos(urls) {
                  });
                  userPhotoCollection.addMatchedUrls(matchedUrls);
                  console.log('urls',userPhotoCollection.getMatchedUrls());
+                 async_callback(null, userPhotoCollection.getMatchedUrls());
+
              });
   }
 
@@ -130,25 +133,39 @@ function findPhotos(urls) {
     ,"http://res.cloudinary.com/isityou/image/upload/v1434892101/maria2_i05l5c.jpg"
     ];
   ////////////////////////////////////////////////////////////
+var dataRequests = [];
 
 
-var promised = Q("initialVal");
-//var promised = deferred.promise;
+urls.forEach(function(url){
+  console.log("url", url);
+  dataRequests.push(function(async_callback) {
+    faceDetection(url,async_callback);
+    });
+});
+// dataRequests.push(function(async_callback) {
+// })
+//   console.log("data Requests", dataRequests);
 
-// //look at the reduce syntax
-urls.forEach(function (url) {
-    promised = promised
-                .then( function(val) { faceDetection(url); console.log("%j",val); return "success"; } , function(){return "error";});
-  });
 
-promised = promised
-   .then( function(val) { findSimilars(userPhotoCollection.getFaceIdData()); console.log("lst promise %j",val); return true; },function(){return "error in findSimilars";} )
-
-//deferred.resolve(userPhotoCollection.getMatchedUrls());
-
-console.log("here we are : %j",promised);
-
-return userPhotoCollection.getMatchedUrls();
+async.series (dataRequests,
+  function(err, results) {
+    var anotherDataRequest = [];
+    anotherDataRequest.push(function(async_callback2) {
+      findSimilars(userPhotoCollection.getFaceIdData(), async_callback2);
+    });
+    // build the object with the faceids from the results array
+    // request( {}, function() { do something with results }
+    console.log("results", results);
+    // new_results = results.map(
+      // function(result) {
+      //   console.log(result);
+      // });
+    async.series(anotherDataRequest,
+    function(err, results){
+      console.log("final async results:", results);
+      res.send(results);
+    });
+});
 
 }
 

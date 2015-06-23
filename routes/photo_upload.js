@@ -18,9 +18,10 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
   // res.json({photos: [ 'http://res.cloudinary.com/isityou/image/upload/v1434892101/maria2_i05l5c.jpg',
   // 'http://res.cloudinary.com/isityou/image/upload/v1434854174/get_faces/maria.jpg' ]});
-  Q.fcall(findPhotos).then(function(urls) {res.json({photos: urls});}).done();
+  // Q.fcall(findPhotos).then(function(urls) {res.json({photos: urls});}).done();
 
-  // res.json({photos: "findPhotos()"});
+  // res.json({photos: findPhotos()});
+  findPhotos(res);
 });
 
 
