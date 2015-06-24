@@ -14,8 +14,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  findPhotos(res);
-});
+  var urls = {targeturl: "http://res.cloudinary.com/isityou/image/upload/v1434854174/get_faces/maria.jpg", urls:  ["http://res.cloudinary.com/isityou/image/upload/v1434854174/get_faces/maria.jpg"]}
 
+  findPhotos(res,urls);
+});
 
 module.exports = router;

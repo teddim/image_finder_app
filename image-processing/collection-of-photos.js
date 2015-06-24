@@ -1,59 +1,68 @@
-var Photo   = require('./photo');
+var CollectionOfPhotos = function(targetUrl, collectionUrls ) {
 
-var CollectionOfPhotos = function() {
+  this.targetUrl = targetUrl;
+  this.targetFaceId = '0fee34e4-6011-498a-a82a-8567b4df1617';
 
-  this.targetPhotoId = '6d567ebf-9e2f-4195-b2a4-319441039a18';
-  // example: {url: [id1,id2,id3], url2: [id4], url3: [id5,id6,id7]}
-  this.allUrlsAndFaceIds = {"http://res.cloudinary.com/isityou/image/upload/v1434854280/get_faces/heather.jpg": ['559583ad-41b1-4eee-93b5-c878a82d98a8']
-  ,"http://res.cloudinary.com/isityou/image/upload/v1434891981/sue_v3l6yq.jpg": ['f0b127b5-b250-4813-bcc7-1b7710d73b11']
-  ,"http://res.cloudinary.com/isityou/image/upload/v1433997424/preset_folder/yv7u6cn6x8p9ahhqngti.jpg" : ['9c0f6965-cfbe-4348-9e90-bdbec367e314']
-  ,"http://res.cloudinary.com/isityou/image/upload/v1434854174/get_faces/maria.jpg" : ['114746fc-9655-4deb-9ca0-6b9543945582']
-  ,"http://res.cloudinary.com/isityou/image/upload/v1434892101/maria2_i05l5c.jpg" : ['6d567ebf-9e2f-4195-b2a4-319441039a18']
-  };
+  this.photos = [];
+
   this.faceIdData = {};
   this.matchedUrls = [];
 
   var that = this;
+
+  collectionUrls.forEach(function(url) {
+    console.log(url);
+    that.photos.push({"url": url});
+    console.log("that.photos",that.photos);
+  });
+
   return {
-    addTargetPhoto: function(photo) {
-      that.targetPhotoId = photo.faceId[0] || '';
-    },
-    addPhoto: function(photo) {
-      that.allUrlsAndFaceIds[photo.mainUrl] = [];
-    },
-    addPhotoFaceId: function(photo) {
-      that.allUrlsAndFaceIds[photo.mainUrl] = photo.faceIds[0];
+
+    addFaceId: function(dataUrl,faceId) {
+      console.log("faceId", faceId);
+      that.photos.forEach(function(photo, index){
+        that.photos[index]["faceId"] = faceId;
+      })
+
+      console.log("addFaceId", that.photos);
     },
     getPhotoUrls: function() {
-      return Object.keys(that.allUrlsAndFaceIds);
+      // console.log("getPhotoUrls", that.photos["url"]);
+      return that.photos.map(function(photo){
+        return photo["url"];
+      })
     },
-    getAllFaceIds: function() {
-      var faceIds = []
-      for (key in that.allUrlsAndFaceIds) {
-        faceIds = faceIds.concat(that.allUrlsAndFaceIds[key]);
-      }
-      return faceIds;
+    getFaceIds: function() {
+      console.log("that.photos", that.photos);
+      var result = that.photos.map(function(photo){
+        return photo.faceId;
+    });
+        console.log("getFaceIds:", result);
+        return result;
     },
-    getPhotoUrlFromFaceId: function(targetFaceId) {
-      for (photoUrl in that.allUrlsAndFaceIds) {
-        var faceIdmatch = that.allUrlsAndFaceIds[photoUrl].filter(function(faceId) {
-          return faceId === targetFaceId;
-        });
-        if (faceIdmatch.length === 1) {
-          return photoUrl;
-        }
-      }
+    getPhotoUrlFromFaceId: function(faceId) {
+      var result = that.photos.filter(function(photo) {
+        return photo["faceId"] === faceId;
+      })[0]["url"];
+      console.log("getPhotoUrlFromFaceId:", result);
+      return result;
     },
     getFaceIdData: function() {
-      that.faceIdData["faceId"] = that.targetPhotoId;
-      that.faceIdData["faceIds"] = this.getAllFaceIds();
-      return that.faceIdData;
+      var result = {};
+
+      result["faceId"] = that.targetFaceId;
+      result["faceIds"] = this.getFaceIds();
+      console.log("getFaceIdData:", result);
+
+      return result;
     },
     addMatchedUrls: function(matchedUrls) {
       that.matchedUrls = matchedUrls;
+      console.log("addMatchedUrls:", that.matchedUrls);
+
     },
     getMatchedUrls: function() {
-      console.log("get", that.matchedUrls);
+      console.log("getMatchedUrls", that.matchedUrls);
       return that.matchedUrls;
     }
   }

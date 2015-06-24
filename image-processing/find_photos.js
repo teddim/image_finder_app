@@ -3,6 +3,7 @@ var async   = require('async');
 var CollectionOfPhotos = require('./collection-of-photos');
 
 function findPhotos(res,urls) {
+
   var faceDetection = function(dataUrl, async_callback) {
     var dataUrl = {'url': dataUrl};
     console.log("dataUrl:" , dataUrl);
@@ -21,13 +22,10 @@ function findPhotos(res,urls) {
 
                 var parsedBody = JSON.parse(body);
                 console.log("faceDetection: ");
-
                 console.log(parsedBody);
+                userPhotoCollection.addFaceId(dataUrl,parsedBody[0].faceId);
                 async_callback(null, parsedBody);
-                //I no longer have named photos...so I need to figure out another way of doing this
-                // photo1.faceIds.push(parsedBody[0]["faceId"]);
-                // photo1.faceCoordinates.push(parsedBody[0]["faceRectangle"]);
-               // call FaceDetection with an array that has the first element cut off?
+
              });
   }
 
@@ -51,18 +49,21 @@ function findPhotos(res,urls) {
                    return userPhotoCollection.getPhotoUrlFromFaceId(element.faceId);
                  });
                  userPhotoCollection.addMatchedUrls(matchedUrls);
-                 console.log('urls',userPhotoCollection.getMatchedUrls());
+                 console.log('matchedUrls:',userPhotoCollection.getMatchedUrls());
                  async_callback(null, userPhotoCollection.getMatchedUrls());
 
              });
   }
 
-  var userPhotoCollection = new CollectionOfPhotos();
-  urls = userPhotoCollection.getPhotoUrls();
+  console.log("urls from the client:", urls["urls"]);
+
+  var userPhotoCollection = new CollectionOfPhotos(urls["targeturl"], urls["urls"]);
+
+  var urlsForCloudinary = userPhotoCollection.getPhotoUrls();
 
   var detectionRequests = [];
 
-  urls.forEach(function(url){
+  urlsForCloudinary.forEach(function(url){
     console.log("url", url);
     detectionRequests.push(function(detection_callback) {
       faceDetection(url,detection_callback);
@@ -75,12 +76,12 @@ function findPhotos(res,urls) {
       findSimilarsRequest.push(function(similars_callback) {
         findSimilars(userPhotoCollection.getFaceIdData(), similars_callback);
       });
-      console.log("results", results);
+      console.log("Find Similars results", results);
 
       async.series(findSimilarsRequest,
       function(err, results){
-        console.log("final async results:", results);
-        res.send(results);
+        console.log("final async results:", results[0]);
+        res.send(results[0]);
       });
   });
 
