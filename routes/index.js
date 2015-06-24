@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'find Me' });
+  res.render('index', { title: 'My Image Finder' });
 });
 
 module.exports = router;
