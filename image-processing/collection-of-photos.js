@@ -1,7 +1,7 @@
 var CollectionOfPhotos = function(targetUrl, collectionUrls ) {
 
   this.targetUrl = targetUrl;
-  this.targetFaceId = '0fee34e4-6011-498a-a82a-8567b4df1617';
+  this.targetFaceId = '';
 
   this.photos = [];
 
@@ -9,6 +9,8 @@ var CollectionOfPhotos = function(targetUrl, collectionUrls ) {
   this.matchedUrls = [];
 
   var that = this;
+
+  collectionUrls.unshift(targetUrl);
 
   collectionUrls.forEach(function(url) {
     console.log(url);
@@ -19,9 +21,11 @@ var CollectionOfPhotos = function(targetUrl, collectionUrls ) {
   return {
 
     addFaceId: function(dataUrl,faceId) {
-      console.log("faceId", faceId);
+      console.log("faceId", faceId, dataUrl);
       that.photos.forEach(function(photo, index){
-        that.photos[index]["faceId"] = faceId;
+        if (that.photos[index]["url"] === dataUrl) {
+          that.photos[index]["faceId"] = faceId;
+        }
       })
 
       console.log("addFaceId", that.photos);
@@ -34,7 +38,8 @@ var CollectionOfPhotos = function(targetUrl, collectionUrls ) {
     },
     getFaceIds: function() {
       console.log("that.photos", that.photos);
-      var result = that.photos.map(function(photo){
+      var selectedFaceIds = that.photos.slice(1);
+      var result = selectedFaceIds.map(function(photo){
         return photo.faceId;
     });
         console.log("getFaceIds:", result);
@@ -50,7 +55,7 @@ var CollectionOfPhotos = function(targetUrl, collectionUrls ) {
     getFaceIdData: function() {
       var result = {};
 
-      result["faceId"] = that.targetFaceId;
+      result["faceId"] = that.photos[0].faceId;
       result["faceIds"] = this.getFaceIds();
       console.log("getFaceIdData:", result);
 

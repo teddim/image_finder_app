@@ -5,8 +5,8 @@ var CollectionOfPhotos = require('./collection-of-photos');
 function findPhotos(res,urls) {
 
   var faceDetection = function(dataUrl, async_callback) {
-    var dataUrl = {'url': dataUrl};
-    console.log("dataUrl:" , dataUrl);
+    var dataUrlObj = {'url': dataUrl};
+    console.log("dataUrlObj:" , dataUrlObj);
     var options={
                 'APIkey':process.env.OXFORD_API_SECOND_KEY
               };
@@ -15,7 +15,7 @@ function findPhotos(res,urls) {
              url: 'https://api.projectoxford.ai/face/v0/detections',
              headers: {'Access-Control-Allow-Origin': '*', 'Ocp-Apim-Subscription-Key': process.env.OXFORD_API_SECOND_KEY},
              method:"POST",
-             body: JSON.stringify(dataUrl)
+             body: JSON.stringify(dataUrlObj)
            },function(error,response,body){
                 // console.log("body:" + body);
                  //get the faceId of the photo and push it onto the id list
@@ -55,9 +55,9 @@ function findPhotos(res,urls) {
              });
   }
 
-  console.log("urls from the client:", urls["urls"]);
+  console.log("urls from the client:", urls["urls[]"]);
 
-  var userPhotoCollection = new CollectionOfPhotos(urls["targeturl"], urls["urls"]);
+  var userPhotoCollection = new CollectionOfPhotos(urls["targeturl"], urls["urls[]"]);
 
   var urlsForCloudinary = userPhotoCollection.getPhotoUrls();
 

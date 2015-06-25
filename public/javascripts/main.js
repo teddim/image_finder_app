@@ -35,7 +35,7 @@ $(document).ready(function() {
         // console.log("json:", json);
 // debugger;
 
-        $.post( "/photo_upload", "test")
+        $.post( "/photo_upload", { targeturl: localStorage.getItem("target"), urls: cloudinaryUrls })
           .done(function( photoUrls ) {
             console.log(photoUrls);
             $.each( photoUrls, function( key, url ) {
