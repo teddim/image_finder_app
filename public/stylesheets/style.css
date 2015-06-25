@@ -1,18 +1,25 @@
 body {
-  /*padding: 50px;*/
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px "Open Sans", Helvetica, Arial, sans-serif;
+
 }
 
 a {
   color: #00B7FF;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Open Sans';
+}
+p, div {
+    font-family: 'Open Sans';
+}
+
 h1 {
   color: #ffffff;
+  font: 58px "Open Sans", sans-serif;
 }
-#findme {
-  font: 58px "Yeseva One", cursive;
-}
+
+
 #cloudinary-overlay.with_theme {
   display: block;
 }
@@ -182,7 +189,21 @@ html, body {
   background-size: cover;
 }
 
-#startfinding {
+#photoupload {
+  background-color: #ffffff;
+}
+
+.uploadnav {
+  background: #666666;
+  /*opacity: 0.75;*/
+}
+.title {
+  font: 38px "Yeseva One", cursive;
+  padding: 20px;
+
+}
+.title-large {
+  font: 48px "Yeseva One", cursive;
 }
 
 #howitworks {
@@ -216,10 +237,6 @@ html, body {
   opacity: 0.85;
 }
 
-#google_map {
-  height: 500px;
-}
-
 footer {
   padding: 20px 0;
 }
@@ -236,9 +253,21 @@ footer .glyphicon:hover {
 #test {
   background: #ffffff;
   opacity: 0.75;
-
+}
+#test2 {
+  background: #666666;
+  opacity: 0.75;
+}
+.cloudimage {
+  height: 300px;
 }
 
 #incognito_link {
   color: #ffffff;
+}
+
+.navbar-brand {
+  color: #000000 !important;
+}
+
 }

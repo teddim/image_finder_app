@@ -14,21 +14,66 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" />
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Yeseva+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+
   </head>
 
   <body>
-    <h1>Step 1: Upload a Single Target Image</h1>
-    <p id="target_photo"> </p>
+
+        <!-- navigation panel -->
+        <nav class="navbar navbar-default" id = "test2">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand " href="#">
+                My Image Finder
+              </a>
+            </div>
+          </div>
+        </nav>
+
+        <div id="photoupload" class="container photoupload">
+          <h1> <%= title %> </h1>
+          <br>
+          <div class="col-xs-4">
+            <p id= "target_photo">
+              <a href="#" class="target_photo_thumbs">
+              </a>
+            </p>
+          </div>
+
+          <div class="col-xs-8">
+            <p id= "collection_photos">
+              <a href="#" class="collection_photo_thumbs">
+              </a>
+            </p>
+          </div>
+
+        </div>
+
+<br>
+          <div class="container">
+
+          <div class="well well-lg">
+            <h3 >Matched Images</h3>
+            <p id ="matched_photos">
+
+            </p>
+
+          </div>
+          </div>
+
+        <!-- footer -->
+        <footer>
+          <hr />
+          <div class="container">
+            <p class="text-right">Project Developed by <a href="http://www.teddimaull.com/">Teddi Maull</a></p>
+
+          </div>
+        </footer>
+        <!-- /footer -->
 
 
-    <h1>Step 2: Upload up to 20 Images</h1>
-
-    <p id="upload_widget_opener_collection"> </p>
-
-    <h1>Matched Images</h1>
-      <p id ="matched_photos">
-
-    </p>
     <script src="//widget.cloudinary.com/global/all.js" type="text/javascript"></script>
     <script type="text/javascript" src="/javascripts/main.js"></script>
   </body>
