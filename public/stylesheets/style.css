@@ -203,7 +203,7 @@ html, body {
 
 }
 .title-large {
-  font: 48px "Yeseva One", cursive;
+  font: 58px "Yeseva One", cursive;
 }
 
 #howitworks {
@@ -260,6 +260,7 @@ footer .glyphicon:hover {
 }
 .cloudimage {
   height: 300px;
+  padding: 5px;
 }
 
 #incognito_link {
