@@ -14,7 +14,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  // console.log("req.body:", req.body);
   var urls = req.body;
   findPhotos(res,urls);
 });
