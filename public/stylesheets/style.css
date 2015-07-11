@@ -178,7 +178,7 @@ html, body {
 
 /* additional sections */
 #home {
-  background: url(../images/unsplash_ArianaEscobar.jpg) no-repeat center center fixed;
+  background: url(http://res.cloudinary.com/isityou/image/upload/c_scale,w_1920/v1436637343/unsplash_ArianaEscobar_hqic7d.jpg) no-repeat center center fixed;
   display: table;
   height: 100%;
   position: relative;
@@ -223,7 +223,7 @@ html, body {
 }
 
 #information {
-  background: url(../images/unsplash_ArianaEscobar2.jpg) no-repeat center center fixed;
+  background: url(http://res.cloudinary.com/isityou/image/upload/c_scale,w_1920/v1436637337/unsplash_ArianaEscobar2_jcn0n2.jpg) no-repeat center center fixed;
   display: table;
   height: 800px;
   position: relative;
